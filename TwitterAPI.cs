@@ -82,9 +82,9 @@ namespace DNWS
                 }
                 else if (request.Method == "DELETE")
                 {
-                    Twitter twitter = new Twitter(user);
                     try
                     {
+                        Twitter twitter = new Twitter(user);
                         twitter.DeleteUser(user);
                         response.body = Encoding.UTF8.GetBytes("200 OK");
                     }
@@ -97,7 +97,6 @@ namespace DNWS
             }
             else if (path[0] == "following")
             {
-                Twitter twitter = new Twitter(user);
                 if (request.Method == "GET")
                 {
                     string json = JsonConvert.SerializeObject(GetFollowing(user));
@@ -107,6 +106,7 @@ namespace DNWS
                 {
                     if (Twitter.CheckUser(following))
                     {
+                        Twitter twitter = new Twitter(user);
                         twitter.AddFollowing(following);
                         response.body = Encoding.UTF8.GetBytes("200 OK");
                     }
@@ -120,6 +120,7 @@ namespace DNWS
                 {
                     try
                     {
+                        Twitter twitter = new Twitter(user);
                         twitter.RemoveFollowing(following);
                         response.body = Encoding.UTF8.GetBytes("200 OK");
                     }
@@ -132,11 +133,12 @@ namespace DNWS
             }
             else if (path[0] == "tweets")
             {
-                Twitter twitter = new Twitter(user);
+                
                 if (request.Method == "GET")
                 {
                     try
                     {
+                        Twitter twitter = new Twitter(user);
                         string timeline = request.getRequestByKey("timeline");
                         if (timeline == "following")
                         {
@@ -145,6 +147,7 @@ namespace DNWS
                         }
                         else
                         {
+                            Twitter twitter = new Twitter(user);
                             string json = JsonConvert.SerializeObject(twitter.GetUserTimeline());
                             response.body = Encoding.UTF8.GetBytes(json);
                         }
@@ -159,6 +162,7 @@ namespace DNWS
                 {
                     try
                     {
+                        Twitter twitter = new Twitter(user);
                         twitter.PostTweet(message);
                         response.body = Encoding.UTF8.GetBytes("200 OK");
                     }
